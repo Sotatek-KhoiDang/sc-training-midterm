@@ -7,10 +7,14 @@ const DecentralizedVotingModule = buildModule(
   "DecentralizedVotingModule",
   (m) => {
     const token = m.contract("VotingToken");
-
+    const vesting = m.contract("TokenVesting", [token]);
     const requiredBalance = ethers.parseUnits("1000", 18);
 
-    const voting = m.contract("DecentralizedVoting", [token, requiredBalance]);
+    const voting = m.contract("DecentralizedVoting", [
+      token,
+      vesting,
+      requiredBalance,
+    ]);
 
     return { token, voting };
   }
